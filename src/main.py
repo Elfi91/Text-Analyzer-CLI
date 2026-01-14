@@ -22,6 +22,7 @@ from rich import print as rprint
 from src import analyzer
 from src import storage
 from src import ai_client
+from src import pdf_utils
 
 # Configure Logging
 logging.basicConfig(
@@ -168,9 +169,14 @@ def interactive_menu():
                  import os
                  if os.path.exists(text_input):
                      try:
-                         with open(text_input, "r", encoding="utf-8") as f:
-                             perform_analysis(f.read(), source=f"File: {text_input}")
-                             continue
+                         if text_input.lower().endswith(".pdf"):
+                             rprint("[cyan]Detected PDF file. Extracting text...[/cyan]")
+                             content = pdf_utils.extract_text_from_pdf(text_input)
+                             perform_analysis(content, source=f"PDF: {text_input}")
+                         else:
+                             with open(text_input, "r", encoding="utf-8") as f:
+                                 perform_analysis(f.read(), source=f"File: {text_input}")
+                         continue
                      except Exception as e:
                          rprint(f"[red]Error reading file: {e}[/red]")
             
@@ -202,8 +208,12 @@ def main():
         perform_analysis(args.text, source="CLI Argument")
     elif args.file:
         try:
-            with open(args.file, "r", encoding="utf-8") as f:
-                perform_analysis(f.read(), source=f"File: {args.file}")
+            if args.file.lower().endswith(".pdf"):
+                content = pdf_utils.extract_text_from_pdf(args.file)
+                perform_analysis(content, source=f"PDF: {args.file}")
+            else:
+                with open(args.file, "r", encoding="utf-8") as f:
+                    perform_analysis(f.read(), source=f"File: {args.file}")
         except FileNotFoundError:
              rprint(f"[bold red]Error:[/bold red] File not found: {args.file}")
     else:

@@ -41,6 +41,10 @@
     - [x] Verify handling of "Hallucinations" (ensure AI output parses correctly) <!-- id: 28 -->
 
 ## Phase 6: Future Extras
+- [x] **PDF Input Support** <!-- id: 33 -->
+    - [x] Add `pypdf` to requirements <!-- id: 34 -->
+    - [x] Create `src/pdf_utils.py` for text extraction <!-- id: 35 -->
+    - [x] Update `main.py` to handle `.pdf` files <!-- id: 36 -->
 - [ ] **Export Features** <!-- id: 29 -->
     - [ ] Implement export to Markdown/CSV <!-- id: 30 -->
     - [ ] Implement export to Google Spreadsheet <!-- id: 31 -->
