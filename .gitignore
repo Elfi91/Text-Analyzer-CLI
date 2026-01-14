@@ -41,6 +41,9 @@ env/
 # Credentials
 credentials.json
 
+# System
+.DS_Store
+
 # Exports
 exports/*
 !exports/.gitkeep
