@@ -9,11 +9,20 @@ import uuid
 from datetime import datetime
 import logging
 
-DB_FILE = "db.json"
+
+DATA_DIR = "data"
+DB_FILE = os.path.join(DATA_DIR, "db.json")
+
+def _ensure_data_dir():
+    """Ensures the data directory exists."""
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
+
 logger = logging.getLogger(__name__)
 
 def _load_db() -> list:
     """Loads the database from the JSON file."""
+    _ensure_data_dir()
     if not os.path.exists(DB_FILE):
         return []
     try:
@@ -25,6 +34,7 @@ def _load_db() -> list:
 
 def _save_db(data: list) -> None:
     """Saves the database to the JSON file."""
+    _ensure_data_dir()
     try:
         with open(DB_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)

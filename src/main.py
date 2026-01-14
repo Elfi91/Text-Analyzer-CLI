@@ -26,8 +26,12 @@ from src import pdf_utils
 from src import exporter
 
 # Configure Logging
+# Ensure logs directory exists
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
 logging.basicConfig(
-    filename='app.log',
+    filename='logs/app.log',
     level=logging.WARNING, # Default level
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
