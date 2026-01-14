@@ -20,11 +20,11 @@
     - [x] Implement `get_all_analyses()` (for future use) <!-- id: 14 -->
 
 ## Phase 3: AI Integration (Gemini)
-- [ ] **AI Client Module** <!-- id: 15 -->
-    - [ ] Create `ai_client.py` <!-- id: 16 -->
-    - [ ] Setup Gemini authentication using `os.getenv` <!-- id: 17 -->
-    - [ ] Implement `analyze_sentiment(text)` function with structured prompts <!-- id: 18 -->
-    - [ ] Add error handling (try/except) for API timeouts and invalid keys <!-- id: 19 -->
+- [x] **AI Client Module** <!-- id: 15 -->
+    - [x] Create `ai_client.py` <!-- id: 16 -->
+    - [x] Setup Gemini authentication using `os.getenv` <!-- id: 17 -->
+    - [x] Implement `analyze_sentiment(text)` function with structured prompts <!-- id: 18 -->
+    - [x] Add error handling (try/except) for API timeouts and invalid keys <!-- id: 19 -->
 
 ## Phase 4: CLI & UX
 - [ ] **CLI Interface** <!-- id: 20 -->
