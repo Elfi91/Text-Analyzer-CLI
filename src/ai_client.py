@@ -54,10 +54,21 @@ def analyze_sentiment(text: str) -> dict:
 
         logger.debug(f"Sending request to Gemini: {text[:50]}...")
         
-        response = model.generate_content(prompt)
-        response_text = response.text.strip()
-        
-        logger.debug(f"Received raw response: {response_text}")
+        try:
+            response = model.generate_content(prompt)
+            
+            # Check for block due to safety/copyright/etc
+            if response.prompt_feedback.block_reason:
+                 logger.warning(f"Response blocked: {response.prompt_feedback}")
+                 return {"sentiment": "BLOCKED", "confidence": "Filters Triggered"}
+
+            response_text = response.text.strip()
+            logger.debug(f"Received raw response: {response_text}")
+
+        except ValueError:
+            # response.text raises ValueError if content was blocked but block_reason wasn't caught above
+            logger.error("Gemini response empty/blocked (likely Safety or Recitation).")
+            return {"sentiment": "AI_ERROR", "confidence": "Content Blocked"}
 
         # Basic cleanup if model wraps in ```json ... ```
         if response_text.startswith("```"):
