@@ -4,8 +4,13 @@ Main entry point for the Text-Analyzer-CLI.
 Orchestrates the CLI interface, local analysis, AI integration, and database storage.
 """
 import sys
+import os
 import argparse
 import logging
+
+# Add project root to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
