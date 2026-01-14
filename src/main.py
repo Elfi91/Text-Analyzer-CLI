@@ -197,22 +197,28 @@ def interactive_menu():
              rprint("\n[bold]Export Options[/bold]")
              rprint("1. [cyan]Export to CSV[/cyan] 📊")
              rprint("2. [cyan]Export to Markdown[/cyan] 📝")
-             rprint("3. [dim]Cancel[/dim]")
+             rprint("3. [green]Export to Google Sheet[/green] ☁️")
+             rprint("4. [dim]Cancel[/dim]")
              
-             exp_choice = Prompt.ask("Choose format", choices=["1", "2", "3"], default="1")
+             exp_choice = Prompt.ask("Choose format", choices=["1", "2", "3", "4"], default="1")
              
-             if exp_choice in ["1", "2"]:
+             if exp_choice in ["1", "2", "3"]:
                  try:
-                     history = storage.get_history(limit=100) # Get more history for export
+                     history = storage.get_history(limit=100)
                      if not history:
                          rprint("[yellow]No history to export.[/yellow]")
                      else:
                          if exp_choice == "1":
                              path = exporter.export_to_csv(history)
                              rprint(f"[green]Successfully exported CSV to:[/green] {path}")
-                         else:
+                         elif exp_choice == "2":
                              path = exporter.export_to_markdown(history)
                              rprint(f"[green]Successfully exported Markdown to:[/green] {path}")
+                         elif exp_choice == "3":
+                             sheet_name = Prompt.ask("Enter Google Sheet Name")
+                             url = exporter.export_to_google_sheet(history, sheet_name)
+                             rprint(f"[green]Successfully exported to:[/green] {url}")
+                             
                  except Exception as e:
                      rprint(f"[red]Export failed: {e}[/red]")
 
