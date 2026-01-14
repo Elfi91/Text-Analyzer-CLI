@@ -46,5 +46,10 @@
     - [x] Create `src/pdf_utils.py` for text extraction <!-- id: 35 -->
     - [x] Update `main.py` to handle `.pdf` files <!-- id: 36 -->
 - [/] **Export Features** <!-- id: 29 -->
-    - [ ] Implement export to Markdown/CSV <!-- id: 30 -->
-    - [ ] Implement export to Google Spreadsheet <!-- id: 31 -->
+- [x] Implement export to Markdown/CSV <!-- id: 30 -->
+    - [x] Implement export to Google Spreadsheet <!-- id: 31 -->
+
+## Phase 7: AI Summarization
+- [ ] **AI Summary** <!-- id: 37 -->
+    - [ ] Update `ai_client.py` to generate summaries <!-- id: 38 -->
+    - [ ] Update `main.py` and `storage.py` to display and save summaries <!-- id: 39 -->

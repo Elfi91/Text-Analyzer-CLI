@@ -17,9 +17,11 @@
 *   **Persistenza Automatica:** Come utente, voglio che ogni mia analisi venga salvata automaticamente in un database locale per poterla consultare in futuro, senza dover esportare nulla manualmente.
 *   **Feedback Visivo:** Come utente, voglio vedere uno spinner o una progress bar durante l'attesa dell'analisi AI, per sapere che il sistema sta lavorando.
 
-### Future Roadmap (Post-Core)
+### Phase 7: Summarization
+*   **Riassunto Conciso:** Generare un riassunto di 2-3 frasi del testo analizzato, utile per cogliere il contenuto a colpo d'occhio.
+
+### Future Roadmap
 *   **Cronologia:** Visualizzare le ultime 5 analisi effettuate.
-*   **Riassunto AI:** Ottenere un breve riassunto del testo.
 *   **Export:** Esportare i risultati in formati standard (Markdown, CSV) e su **Google Spreadsheet**.
 *   **Chunking Testi Lunghi:** Dividere documenti molto lunghi (es. libri PDF) in parti più piccole per aggirare limiti di token e filtri di copyright/safety dell'AI.
 
