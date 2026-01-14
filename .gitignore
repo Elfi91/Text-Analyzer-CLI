@@ -37,3 +37,6 @@ env/
 
 # Agent configuration
 .agent/
+
+# Credentials
+credentials.json
