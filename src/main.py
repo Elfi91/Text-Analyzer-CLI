@@ -23,6 +23,7 @@ from src import analyzer
 from src import storage
 from src import ai_client
 from src import pdf_utils
+from src import exporter
 
 # Configure Logging
 logging.basicConfig(
@@ -158,9 +159,10 @@ def interactive_menu():
         console.print("\n[bold]Main Menu[/bold]")
         console.print("1. [cyan]Analizza Testo[/cyan] 📝")
         console.print("2. [cyan]Vedi Storico[/cyan] 📜")
-        console.print("3. [red]Esci[/red] ❌")
+        console.print("3. [cyan]Esporta Dati[/cyan] 💾")
+        console.print("4. [red]Esci[/red] ❌")
         
-        choice = Prompt.ask("Choose an option", choices=["1", "2", "3"], default="1")
+        choice = Prompt.ask("Choose an option", choices=["1", "2", "3", "4"], default="1")
 
         if choice == "1":
             rprint("[dim]Tips: Supporta .txt e .pdf (testo selezionabile). Max consigliato: <100 pagine.[/dim]")
@@ -191,6 +193,30 @@ def interactive_menu():
             show_history()
             
         elif choice == "3":
+             # Export Menu
+             rprint("\n[bold]Export Options[/bold]")
+             rprint("1. [cyan]Export to CSV[/cyan] 📊")
+             rprint("2. [cyan]Export to Markdown[/cyan] 📝")
+             rprint("3. [dim]Cancel[/dim]")
+             
+             exp_choice = Prompt.ask("Choose format", choices=["1", "2", "3"], default="1")
+             
+             if exp_choice in ["1", "2"]:
+                 try:
+                     history = storage.get_history(limit=100) # Get more history for export
+                     if not history:
+                         rprint("[yellow]No history to export.[/yellow]")
+                     else:
+                         if exp_choice == "1":
+                             path = exporter.export_to_csv(history)
+                             rprint(f"[green]Successfully exported CSV to:[/green] {path}")
+                         else:
+                             path = exporter.export_to_markdown(history)
+                             rprint(f"[green]Successfully exported Markdown to:[/green] {path}")
+                 except Exception as e:
+                     rprint(f"[red]Export failed: {e}[/red]")
+
+        elif choice == "4":
             if Confirm.ask("Are you sure you want to exit?"):
                 rprint("[bold cyan]Goodbye![/bold cyan] 👋")
                 break
