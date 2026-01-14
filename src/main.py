@@ -79,6 +79,7 @@ def perform_analysis(text: str, source: str = "Input"):
 
     # 2. AI Analysis (with Spinner)
     ai_result = {"sentiment": "SKIPPED", "confidence": "None"}
+    summary = "N/A"
     try:
         with Progress(
             SpinnerColumn(),
@@ -87,16 +88,17 @@ def perform_analysis(text: str, source: str = "Input"):
         ) as progress:
             progress.add_task(description="Consulting Gemini AI...", total=None)
             ai_result = ai_client.analyze_sentiment(text)
-            logger.debug(f"AI result: {ai_result}")
+            summary = ai_client.generate_summary(text)
+            logger.debug(f"AI result: {ai_result}, Summary: {summary}")
     except Exception as e:
         logger.error(f"AI analysis failed: {e}")
         rprint(f"[bold red]AI Analysis Failed:[/bold red] {e}")
 
     # 3. Save to DB
     record = {
-        "text": text[:100] + "..." if len(text) > 100 else text, # Store snippet or full? requirements say "salvato automaticamente". Snippet is safer for view, but logic might want full. Let's store full text but view snippet.
-        # Wait, if text is huge, DB size explodes. Let's follow requirement: "persistenza". Assuming full text.
+        "text": text[:100] + "..." if len(text) > 100 else text, 
         "full_text": text, 
+        "summary": summary,
         **local_stats,
         **ai_result
     }
@@ -120,6 +122,7 @@ def perform_analysis(text: str, source: str = "Input"):
     sentiment_color = "green" if ai_result.get("sentiment") == "POSITIVE" else "red" if ai_result.get("sentiment") == "NEGATIVE" else "yellow"
     table.add_row("Sentiment", f"[{sentiment_color}]{ai_result.get('sentiment', 'UNKNOWN')}[/{sentiment_color}]")
     table.add_row("Confidence", ai_result.get("confidence", "Unknown"))
+    table.add_row("AI Summary", summary, style="italic")
 
     console.print(table)
 
