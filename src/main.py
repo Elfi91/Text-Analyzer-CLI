@@ -163,6 +163,7 @@ def interactive_menu():
         choice = Prompt.ask("Choose an option", choices=["1", "2", "3"], default="1")
 
         if choice == "1":
+            rprint("[dim]Tips: Supporta .txt e .pdf (testo selezionabile). Max consigliato: <100 pagine.[/dim]")
             text_input = Prompt.ask("Enter text to analyze (or file path)")
             # Sanitize input (remove quotes often added by terminal drag-and-drop)
             clean_input = text_input.strip().strip("'").strip('"')
