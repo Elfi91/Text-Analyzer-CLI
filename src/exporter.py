@@ -107,7 +107,15 @@ def export_to_google_sheet(data: List[Dict], sheet_name: str, credentials_path: 
         
         # Prepare headers and rows
         headers = list(data[0].keys())
-        rows = [list(record.values()) for record in data]
+        rows = []
+        for record in data:
+            row = []
+            for value in record.values():
+                if isinstance(value, str) and len(value) > 40000:
+                    row.append(value[:40000] + "... [TRUNCATED]")
+                else:
+                    row.append(value)
+            rows.append(row)
         
         # Clear and write
         worksheet.clear()
