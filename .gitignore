@@ -41,5 +41,8 @@ env/
 # Credentials
 credentials.json
 
+# Exports
+exports/*
+!exports/.gitkeep
 # Logs
 *.log

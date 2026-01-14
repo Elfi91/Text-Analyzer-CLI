@@ -10,35 +10,35 @@ from typing import List, Dict
 
 logger = logging.getLogger(__name__)
 
+EXPORT_DIR = "exports"
+
+def _ensure_export_dir():
+    """Ensures the export directory exists."""
+    if not os.path.exists(EXPORT_DIR):
+        os.makedirs(EXPORT_DIR)
+
 def export_to_csv(data: List[Dict], filename: str = "export_history.csv") -> str:
     """
     Exports a list of analysis records to a CSV file.
-    
-    Args:
-        data (list): List of dictionaries containing analysis data.
-        filename (str): Target filename.
-        
-    Returns:
-        str: Absolute path of the created file.
     """
     if not data:
         logger.warning("No data to export.")
         return ""
         
+    _ensure_export_dir()
+    filepath = os.path.join(EXPORT_DIR, filename)
+
     try:
         # Determine fields from the first record
         fieldnames = list(data[0].keys())
         
-        # Ensure we don't save huge full texts in CSV if not needed, 
-        # but requirements say "export results". Let's keep it simple.
-        
-        with open(filename, mode='w', newline='', encoding='utf-8') as csvfile:
+        with open(filepath, mode='w', newline='', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(data)
             
-        logger.info(f"Exported {len(data)} records to {filename}")
-        return os.path.abspath(filename)
+        logger.info(f"Exported {len(data)} records to {filepath}")
+        return os.path.abspath(filepath)
     except Exception as e:
         logger.error(f"CSV export failed: {e}")
         raise e
@@ -50,8 +50,11 @@ def export_to_markdown(data: List[Dict], filename: str = "export_history.md") ->
     if not data:
         return ""
         
+    _ensure_export_dir()
+    filepath = os.path.join(EXPORT_DIR, filename)
+
     try:
-        with open(filename, "w", encoding="utf-8") as f:
+        with open(filepath, "w", encoding="utf-8") as f:
             f.write("# Analysis History Export\n\n")
             f.write(f"Generated on: {datetime.now().isoformat()}\n\n")
             
@@ -67,8 +70,8 @@ def export_to_markdown(data: List[Dict], filename: str = "export_history.md") ->
                 f.write(f"> {text_snippet}\n\n")
                 f.write("---\n\n")
                 
-        logger.info(f"Exported {len(data)} records to {filename}")
-        return os.path.abspath(filename)
+        logger.info(f"Exported {len(data)} records to {filepath}")
+        return os.path.abspath(filepath)
     except Exception as e:
         logger.error(f"Markdown export failed: {e}")
         raise e
