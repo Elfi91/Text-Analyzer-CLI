@@ -1,108 +1,96 @@
-# Text-Analyzer-CLI
-Specifiche Tecniche del Progetto
+# 🔍 Text-Analyzer-CLI
 
-Tool CLI che analizza un testo tramite le API di Gemini (sentiment analysis + word count) e salva l'output su DB.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![🇮🇹 Leggi in Italiano](https://img.shields.io/badge/Lang-Italiano-red)](README.it.md)
 
-**Obiettivo**
+**Text-Analyzer-CLI** is a powerful command-line tool that leverages **Google Gemini AI** to analyze text files (TXT, PDF) providing deep insights, sentiment analysis, and concise summaries.
 
-- Automazione dell'insight: Dimostrare come l'AI possa arricchire dati grezzi (il testo) con metadati semantici (sentiment, word count) in modo trasparente per l'utente.
-- User Experience CLI: Fornire un'interfaccia a riga di comando fluida e intuitiva, con messaggi di stato chiari (es. in corso, completato, errore) e feedback visivi (es. spinner o progress bar).
-- Integrità dei dati: Assicurare che i dati siano salvati e archiviati in modo corretto e in modo trasparente per l'utente, garantendo la persistenza anche dopo un crash o un riavvio del sistema.
-- Separazione delle responsabilità: Scrivere codice modulare dove la logica di calcolo locale, la chiamata all'API, l'accesso al DB e la persistenza dei dati siano separate in moduli distinti.
+## ✨ Features
 
-**Possibili problemi**
-1. Gestione delle API Key e Sicurezza:
-- Problema: Caricare per errore la chiave Gemini su GitHub.
-- Soluzione: Caricare la API Key da un file .env e aggiungere il file .env al .gitignore
+- **📄 Text & PDF Support**: Analyze raw text strings or files (supporting `.txt` and `.pdf` with text extraction).
+- **🧠 AI-Powered Insights**:
+    - **Sentiment Analysis**: Detects tone (Positive, Negative, Neutral) with confidence scores.
+    - **AI Summarization**: Generates a 2-3 sentence summary of the content.
+- **📊 Local Statistics**: Instant calculation of word count, characters, and lines.
+- **💾 Local Database**: Automatically saves every analysis to a local JSON database (`data/db.json`).
+- **📜 History & Persistence**: View your analysis history directly from the terminal.
+- **📤 Data Export**:
+    - **CSV**: Export your analysis history to spreadhseets.
+    - **Markdown**: Generate readable reports.
+    - **Google Sheets**: Directly upload your data to the cloud.
 
-2. Latenza e Timeout delle Chiamate API:
-- Problema: Le chiamate API possono essere molto lente e potrebbero causare timeout.
-- Soluzione:
-    - Implementare un timeout per le chiamate API e un meccanismo di retry per evitare che il programma si blocchi. 
-    - Implementare un indicatore di caricamento (spinner) per mostrare all'utente che il programma sta lavorando.
+## 📂 Project Structure
 
-3. Allucinazioni o Output AI non strutturato:
-- Problema: Gemini potrebbe restituire output non strutturato o non coerente.
-- Soluzione: Implementare un meccanismo di validazione per assicurare che l'output sia strutturato e coerente.
+```bash
+Text-Analyzer-CLI/
+├── data/            # Stores the local database (db.json)
+├── docs/            # Documentation (Tasks, Specs, Guides)
+├── exports/         # Generated CSV/Markdown reports
+├── logs/            # Application system logs
+├── src/             # Source code
+├── tests/           # Unit tests
+└── README.md        # This file
+```
 
-- Problema: Gemini potrebbe rispondere con una frase lunga invece di una singola parola (es. "Penso che il testo sia positivo") rendendo difficile il salvataggio su DB.
-- Soluzione: Utilizzare Prompt Engineering specifico (es. "Rispondi solo con una parola: POSITIVO, NEGATIVO o NEUTRO") o forzare l'output in formato JSON.
+## 🚀 Quick Start
 
-4. Limiti di Token e Testi Lunghi:
-- Problema: Se l'utente incolla un intero libro, potresti superare il limite di token del modello o i limiti della richiesta HTTP.
-- Soluzione: 
-    - Implementare un meccanismo di chunking per dividi il testo in blocchi più piccoli e processarli uno alla volta.
-    - Implementare un controllo sulla lunghezza del testo in input e avvisare l'utente se il testo è troppo lungo prima di inviare la chiamata.
+### 1. Installation
 
-5. Concorrenza nel Database (SQLite):
-- Problema: Se tenti di fare più analisi simultanee (caso raro in una CLI semplice, ma possibile), SQLite potrebbe restituire un errore di "Database locked".
-- Soluzione: Gestire correttamente l'apertura e la chiusura delle connessioni al DB.
+```bash
+# Clone the repository
+git clone https://github.com/Elfi91/Text-Analyzer-CLI.git
+cd Text-Analyzer-CLI
 
-6. Gestione degli Errori:
-- Problema: Se c'è un errore durante la chiamata all'API, potrebbe essere difficile capire quale errore è stato causato.
-- Soluzione: Implementare un meccanismo di logging per registrare tutti gli errori e permettere all'utente di capire quale errore è stato causato.
+# Create Virtual Environment
+python3 -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-7. Persistenza dei Dati:
-- Problema: Se il programma si interrompe durante l'analisi, potrebbe essere difficile riprendere l'analisi.
-- Soluzione: Implementare un meccanismo di persistenza dei dati per permettere all'utente di riprendere l'analisi.
+# Install Dependencies
+pip install -r requirements.txt
+```
 
+### 2. Configuration
 
-**Requisiti Funzionali (Core)**
-Il tool deve permettere all'utente di passare un testo (o un file) tramite riga di comando e ottenere:
-- Word Count:  Calcolo locale di parole, caratteri e righe nel testo
-- Sentiment Analysis: Integrazione con Gemini per determinare se il tono è Positivo, Negativo o Neutro, con un punteggio di confidenza.
-- Persistence: Salvataggio automatico dei risultati in un database (TonyDB/JSON)
+1. Create a `.env` file in the root directory:
+   ```bash
+   cp .env.example .env
+   ```
+2. Add your **Google Gemini API Key** to `.env`:
+   ```env
+   GEMINI_API_KEY=your_api_key_here
+   ```
+3. *(Optional)* For Google Sheets export, place your `credentials.json` in the root folder (see [docs/GOOGLE_SETUP.md](docs/GOOGLE_SETUP.md)).
 
-**Architettura del Sistema**
-L'applciazione seguirà un flusso modulare:
+### 3. Usage
 
-1. Input: Lettura argomenti tramite CLI
-2. Processing locale: Calcolo immediamo delle statistiche (Word Count)
-3. AI Integration: Richiesta asincroma a Gemini per Sentiment Analysis
-4. Database: Scrittura del record contenente:
-    - ID
-    - Testo
-    - Word Count
-    - Sentiment Analysis
-    - Confidence
-    - Timestamp
-5. Output: Visualizzazione a terminale di un riepilogo formattato
+**Interactive Mode (Recommended):**
+```bash
+python src/main.py
+```
+Follow the on-screen menu to analyze files, view history, or export data.
 
-**Stack Tecnologico**
-- Linguaggio: Python
-- AI SDK: Google Generative AI (Gemini)
-- Database/Storage: JSON File / TinyDB (Scelta dettata dalla necessità di una struttura dati flessibile e di un formato facilmente leggibile anche esternamente al tool).
-- CLI Parsing: argparse.
-- Enviroment: Python-dotenv
+**Direct Command Mode:**
+```bash
+# Analyze a text string
+python src/main.py --text "I love this product!"
 
-**Suggerimenti per Feature Aggiuntive (Post-Core)**
+# Analyze a file
+python src/main.py --file path/to/document.pdf
+```
 
-- Analisi di File: Invece di passare una stringa, permettere il comando --file document.txt.
-- **Large File Handling**: Attualmente il tool analizza il file in un blocco unico. In futuro verrà implementato il **Chunking** per gestire libri e documenti lunghi che potrebbero essere bloccati dall'AI (Safety/Copyright).
-- Summarization: Chiedere a Gemini di generare un breve riassunto (max 20 parole).
-- History Command: Un comando history per visualizzare le ultime 5 analisi salvate.
-- Export: Opzione per esportare i report in Markdown o Google Sheets.
+## 🧪 Running Tests
 
-## 🚀 Quick Start in 3 Steps
+To verify the core logic:
+```bash
+pytest tests/
+```
 
-1.  **Clone & Setup**:
-    ```bash
-    git clone https://github.com/Elfi91/Text-Analyzer-CLI.git
-    cd Text-Analyzer-CLI
-    python3 -m venv .venv
-    source .venv/bin/activate  # Windows: .venv\Scripts\activate
-    pip install -r requirements.txt
-    ```
+## 🔒 Security Note
 
-2.  **Configure API Key**:
-    - Rename `.env.example` to `.env`
-    - Add your Gemini API Key: `GEMINI_API_KEY=your_key_here`
+- **API Keys**: Stored in `.env` (ignored by Git).
+- **Google Credentials**: `credentials.json` is ignored by Git.
+- **Logs**: System logs in `logs/` are ignored by Git.
 
-3.  **Run**:
-    ```bash
-    # Interactive Mode
-    python src/main.py
-
-    # Direct Mode
-    python src/main.py --text "Hello world! This is a test."
-    ```
+---
+*Powered by Google Gemini AI & Python 🐍*
