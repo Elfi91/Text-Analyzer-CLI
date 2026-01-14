@@ -78,6 +78,7 @@ L'applciazione seguirà un flusso modulare:
 **Suggerimenti per Feature Aggiuntive (Post-Core)**
 
 - Analisi di File: Invece di passare una stringa, permettere il comando --file document.txt.
+- **Large File Handling**: Attualmente il tool analizza il file in un blocco unico. In futuro verrà implementato il **Chunking** per gestire libri e documenti lunghi che potrebbero essere bloccati dall'AI (Safety/Copyright).
 - Summarization: Chiedere a Gemini di generare un breve riassunto (max 20 parole).
 - History Command: Un comando history per visualizzare le ultime 5 analisi salvate.
 - Export: Opzione per esportare i report in Markdown o Google Sheets.

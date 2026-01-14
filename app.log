@@ -4,3 +4,4 @@
 2026-01-14 16:46:27,166 - src.ai_client - DEBUG - Received raw response: {"sentiment": "NEUTRAL", "confidence": "HIGH"}
 2026-01-14 16:46:27,167 - __main__ - DEBUG - AI result: {'sentiment': 'NEUTRAL', 'confidence': 'HIGH'}
 2026-01-14 16:46:27,167 - src.storage - DEBUG - Saved analysis record: 77b13de5-f468-4587-a9ca-88c28a24a558
+2026-01-14 17:00:42,054 - src.ai_client - ERROR - Unexpected error in analyze_sentiment: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
