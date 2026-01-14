@@ -27,12 +27,12 @@
     - [x] Add error handling (try/except) for API timeouts and invalid keys <!-- id: 19 -->
 
 ## Phase 4: CLI & UX
-- [ ] **CLI Interface** <!-- id: 20 -->
-    - [ ] Create `main.py` entry point <!-- id: 21 -->
-    - [ ] Implement Interactive Menu Loop (Analyze, History, Exit) <!-- id: 22 -->
-    - [ ] Setup `argparse` for optional direct flags <!-- id: 32 -->
-    - [ ] Integrate `rich` library for spinners and formatted output <!-- id: 23 -->
-    - [ ] Connect all modules: Input -> Local Stats -> AI -> DB -> Output <!-- id: 24 -->
+- [x] **CLI Interface** <!-- id: 20 -->
+    - [x] Create `main.py` entry point <!-- id: 21 -->
+    - [x] Implement Interactive Menu Loop (Analyze, History, Exit) <!-- id: 22 -->
+    - [x] Setup `argparse` for optional direct flags <!-- id: 32 -->
+    - [x] Integrate `rich` library for spinners and formatted output <!-- id: 23 -->
+    - [x] Connect all modules: Input -> Local Stats -> AI -> DB -> Output <!-- id: 24 -->
 
 ## Phase 5: Reliability & Polishing
 - [ ] **Validation & Logging** <!-- id: 25 -->
