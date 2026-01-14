@@ -34,3 +34,6 @@ env/
 # Database
 *.json
 *.db
+
+# Agent configuration
+.agent/

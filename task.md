@@ -13,11 +13,11 @@
     - [x] Create `analyzer.py` <!-- id: 7 -->
     - [x] Implement function for word, character, and line count <!-- id: 8 -->
     - [x] Add unit tests for local analysis <!-- id: 9 -->
-- [ ] **Database Module** <!-- id: 10 -->
-    - [ ] Create `storage.py` <!-- id: 11 -->
-    - [ ] Implement JSON file handling (load/save) <!-- id: 12 -->
-    - [ ] Implement `save_analysis(data)` function <!-- id: 13 -->
-    - [ ] Implement `get_all_analyses()` (for future use) <!-- id: 14 -->
+- [x] **Database Module** <!-- id: 10 -->
+    - [x] Create `storage.py` <!-- id: 11 -->
+    - [x] Implement JSON file handling (load/save) <!-- id: 12 -->
+    - [x] Implement `save_analysis(data)` function <!-- id: 13 -->
+    - [x] Implement `get_all_analyses()` (for future use) <!-- id: 14 -->
 
 ## Phase 3: AI Integration (Gemini)
 - [ ] **AI Client Module** <!-- id: 15 -->
