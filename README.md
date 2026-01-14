@@ -92,5 +92,3 @@ pytest tests/
 - **Google Credentials**: `credentials.json` is ignored by Git.
 - **Logs**: System logs in `logs/` are ignored by Git.
 
----
-*Powered by Google Gemini AI & Python 🐍*

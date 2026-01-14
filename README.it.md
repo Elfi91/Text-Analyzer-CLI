@@ -91,6 +91,3 @@ pytest tests/
 - **API Keys**: Salvate nel file `.env` (ignorato da Git).
 - **Google Credentials**: `credentials.json` è ignorato da Git.
 - **Log**: I log di sistema in `logs/` sono ignorati da Git.
-
----
-*Powered by Google Gemini AI & Python 🐍*
