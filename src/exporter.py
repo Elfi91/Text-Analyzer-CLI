@@ -72,3 +72,51 @@ def export_to_markdown(data: List[Dict], filename: str = "export_history.md") ->
     except Exception as e:
         logger.error(f"Markdown export failed: {e}")
         raise e
+
+import gspread
+
+def export_to_google_sheet(data: List[Dict], sheet_name: str, credentials_path: str = "credentials.json") -> str:
+    """
+    Exports data to a Google Sheet.
+    
+    Args:
+        data (list): List of analysis records.
+        sheet_name (str): Name of the Google Sheet (must be shared with service account).
+        credentials_path (str): Path to the service account JSON key.
+        
+    Returns:
+        str: URL of the spreadsheet.
+    """
+    if not data:
+        return ""
+        
+    if not os.path.exists(credentials_path):
+        raise FileNotFoundError(f"Credentials file not found at: {credentials_path}. See GOOGLE_SETUP.md")
+
+    try:
+        # Authenticate
+        gc = gspread.service_account(filename=credentials_path)
+        
+        # Open Sheet
+        try:
+            sh = gc.open(sheet_name)
+        except gspread.SpreadsheetNotFound:
+            raise ValueError(f"Spreadsheet '{sheet_name}' not found. Did you share it with the bot email?")
+
+        worksheet = sh.get_worksheet(0) # Use the first sheet
+        
+        # Prepare headers and rows
+        headers = list(data[0].keys())
+        rows = [list(record.values()) for record in data]
+        
+        # Clear and write
+        worksheet.clear()
+        worksheet.append_row(headers)
+        worksheet.append_rows(rows)
+        
+        logger.info(f"Exported to Google Sheet: {sheet_name}")
+        return f"https://docs.google.com/spreadsheets/d/{sh.id}"
+        
+    except Exception as e:
+        logger.error(f"Google Sheet export failed: {e}")
+        raise e
