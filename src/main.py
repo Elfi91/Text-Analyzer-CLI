@@ -43,8 +43,7 @@ def setup_logging(debug_mode: bool):
 def show_header():
     """Displays the application header."""
     console.print(Panel.fit(
-        "[bold cyan]Text Analyzer CLI[/bold cyan]\n"
-        "[dim]Powered by Gemini AI[/dim]",
+        "[bold cyan]Text Analyzer CLI[/bold cyan]",
         border_style="cyan"
     ))
 
