@@ -9,10 +9,10 @@
     - [x] Create `.env.example` template <!-- id: 5 -->
 
 ## Phase 2: Core Logic Implementation
-- [ ] **Local Analysis Module** <!-- id: 6 -->
-    - [ ] Create `analyzer.py` <!-- id: 7 -->
-    - [ ] Implement function for word, character, and line count <!-- id: 8 -->
-    - [ ] Add unit tests for local analysis <!-- id: 9 -->
+- [x] **Local Analysis Module** <!-- id: 6 -->
+    - [x] Create `analyzer.py` <!-- id: 7 -->
+    - [x] Implement function for word, character, and line count <!-- id: 8 -->
+    - [x] Add unit tests for local analysis <!-- id: 9 -->
 - [ ] **Database Module** <!-- id: 10 -->
     - [ ] Create `storage.py` <!-- id: 11 -->
     - [ ] Implement JSON file handling (load/save) <!-- id: 12 -->
