@@ -23,10 +23,21 @@ def extract_text_from_pdf(file_path: str) -> str:
     try:
         reader = PdfReader(file_path)
         text = []
-        for page in reader.pages:
-            content = page.extract_text()
-            if content:
-                text.append(content)
+        for i, page in enumerate(reader.pages):
+            try:
+                content = page.extract_text()
+                if content:
+                    text.append(content)
+            except Exception as e:
+                logger.warning(f"Failed to extract text from page {i} (layout mode): {e}")
+                try:
+                    # Fallback to plain text extraction if layout fails (fixes 'bbox' error)
+                    content = page.extract_text(extraction_mode="plain")
+                    if content:
+                        text.append(content)
+                except Exception as e2:
+                    logger.error(f"Failed to extract text from page {i} (fallback mode): {e2}")
+                    continue
         return "\n".join(text)
     except Exception as e:
         logger.error(f"Error extracting PDF text: {e}")
