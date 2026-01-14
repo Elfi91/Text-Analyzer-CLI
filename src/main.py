@@ -164,18 +164,22 @@ def interactive_menu():
 
         if choice == "1":
             text_input = Prompt.ask("Enter text to analyze (or file path)")
+            # Sanitize input (remove quotes often added by terminal drag-and-drop)
+            clean_input = text_input.strip().strip("'").strip('"')
+            
             # Check if it's a file
-            if sys.platform != "win32" and "/" in text_input or "." in text_input: # Naive file check
-                 import os
-                 if os.path.exists(text_input):
+            if os.path.isfile(clean_input) or (sys.platform != "win32" and ("/" in clean_input or "." in clean_input)): 
+                 # Try expanded path
+                 expanded_path = os.path.expanduser(clean_input)
+                 if os.path.exists(expanded_path):
                      try:
-                         if text_input.lower().endswith(".pdf"):
-                             rprint("[cyan]Detected PDF file. Extracting text...[/cyan]")
-                             content = pdf_utils.extract_text_from_pdf(text_input)
-                             perform_analysis(content, source=f"PDF: {text_input}")
+                         if expanded_path.lower().endswith(".pdf"):
+                             rprint(f"[cyan]Detected PDF file: {expanded_path}[/cyan]")
+                             content = pdf_utils.extract_text_from_pdf(expanded_path)
+                             perform_analysis(content, source=f"PDF: {os.path.basename(expanded_path)}")
                          else:
-                             with open(text_input, "r", encoding="utf-8") as f:
-                                 perform_analysis(f.read(), source=f"File: {text_input}")
+                             with open(expanded_path, "r", encoding="utf-8") as f:
+                                 perform_analysis(f.read(), source=f"File: {os.path.basename(expanded_path)}")
                          continue
                      except Exception as e:
                          rprint(f"[red]Error reading file: {e}[/red]")
