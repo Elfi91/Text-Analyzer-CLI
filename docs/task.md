@@ -50,6 +50,6 @@
     - [x] Implement export to Google Spreadsheet <!-- id: 31 -->
 
 ## Phase 7: AI Summarization
-- [ ] **AI Summary** <!-- id: 37 -->
-    - [ ] Update `ai_client.py` to generate summaries <!-- id: 38 -->
-    - [ ] Update `main.py` and `storage.py` to display and save summaries <!-- id: 39 -->
+- [x] **AI Summary** <!-- id: 37 -->
+    - [x] Update `ai_client.py` to generate summaries <!-- id: 38 -->
+    - [x] Update `main.py` and `storage.py` to display and save summaries <!-- id: 39 -->

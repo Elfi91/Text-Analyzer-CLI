@@ -97,6 +97,37 @@ def analyze_sentiment(text: str) -> dict:
         logger.error(f"Gemini API Error: {e}")
         return {"sentiment": "API ERROR", "confidence": "None"}
         
-    except Exception as e:
-        logger.error(f"Unexpected error in analyze_sentiment: {e}")
         return {"sentiment": "ERROR", "confidence": "None"}
+
+def generate_summary(text: str) -> str:
+    """
+    Generates a concise summary of the text using Gemini.
+
+    Args:
+        text (str): The text to analyze.
+
+    Returns:
+        str: A 2-3 sentence summary.
+    """
+    if not API_KEY:
+        return "AI Summary Unavailable (No Key)"
+
+    try:
+        model = genai.GenerativeModel(MODEL_NAME)
+        
+        prompt = (
+            f"Summarize the following text in 2-3 concise sentences: '{text[:10000]}'.\n" # Truncate to avoid huge context usage
+            "Keep it plain text."
+        )
+
+        logger.debug(f"Requesting summary for text length {len(text)}...")
+        response = model.generate_content(prompt)
+        
+        if response.text:
+            return response.text.strip()
+        else:
+            return "No summary generated."
+
+    except Exception as e:
+        logger.error(f"Summary generation failed: {e}")
+        return "Summary Error"
