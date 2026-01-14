@@ -78,9 +78,9 @@ def analyze_sentiment(text: str) -> dict:
              
         return result
 
-    except json.JSONDecodeError:
-        logger.error(f"Failed to parse AI response as JSON: {response_text}")
-        return {"sentiment": "UNKNOWN", "confidence": "Low"}
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse AI response as JSON: {e}\nResponse text was: {response_text}")
+        return {"sentiment": "UNKNOWN", "confidence": "Low - Parse Error"}
         
     except exceptions.GoogleAPIError as e:
         logger.error(f"Gemini API Error: {e}")

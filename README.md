@@ -81,3 +81,27 @@ L'applciazione seguirà un flusso modulare:
 - Summarization: Chiedere a Gemini di generare un breve riassunto (max 20 parole).
 - History Command: Un comando history per visualizzare le ultime 5 analisi salvate.
 - Export: Opzione per esportare i report in Markdown o Google Sheets.
+
+## 🚀 Quick Start in 3 Steps
+
+1.  **Clone & Setup**:
+    ```bash
+    git clone https://github.com/Elfi91/Text-Analyzer-CLI.git
+    cd Text-Analyzer-CLI
+    python3 -m venv .venv
+    source .venv/bin/activate  # Windows: .venv\Scripts\activate
+    pip install -r requirements.txt
+    ```
+
+2.  **Configure API Key**:
+    - Rename `.env.example` to `.env`
+    - Add your Gemini API Key: `GEMINI_API_KEY=your_key_here`
+
+3.  **Run**:
+    ```bash
+    # Interactive Mode
+    python src/main.py
+
+    # Direct Mode
+    python src/main.py --text "Hello world! This is a test."
+    ```
