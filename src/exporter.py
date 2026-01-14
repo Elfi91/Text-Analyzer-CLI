@@ -75,14 +75,15 @@ def export_to_markdown(data: List[Dict], filename: str = "export_history.md") ->
 
 import gspread
 
-def export_to_google_sheet(data: List[Dict], sheet_name: str, credentials_path: str = "credentials.json") -> str:
+
+def export_to_google_sheet(data: List[Dict], sheet_name: str, credentials_path: str = None) -> str:
     """
     Exports data to a Google Sheet.
     
     Args:
         data (list): List of analysis records.
         sheet_name (str): Name of the Google Sheet (must be shared with service account).
-        credentials_path (str): Path to the service account JSON key.
+        credentials_path (str): Path to credentials. Defaults to env var or 'credentials.json'.
         
     Returns:
         str: URL of the spreadsheet.
@@ -90,6 +91,10 @@ def export_to_google_sheet(data: List[Dict], sheet_name: str, credentials_path: 
     if not data:
         return ""
         
+    # Resolve credentials path
+    if not credentials_path:
+        credentials_path = os.getenv("GOOGLE_CREDENTIALS_PATH", "credentials.json")
+
     if not os.path.exists(credentials_path):
         raise FileNotFoundError(f"Credentials file not found at: {credentials_path}. See GOOGLE_SETUP.md")
 
@@ -111,8 +116,9 @@ def export_to_google_sheet(data: List[Dict], sheet_name: str, credentials_path: 
         for record in data:
             row = []
             for value in record.values():
-                if isinstance(value, str) and len(value) > 40000:
-                    row.append(value[:40000] + "... [TRUNCATED]")
+                # Truncate to 30k chars to be safe (Sheet limit is 50k)
+                if isinstance(value, str) and len(value) > 30000:
+                    row.append(value[:30000] + "... [TRUNCATED]")
                 else:
                     row.append(value)
             rows.append(row)
