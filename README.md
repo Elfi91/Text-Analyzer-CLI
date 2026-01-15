@@ -24,13 +24,34 @@
 
 ```bash
 Text-Analyzer-CLI/
-├── data/            # Stores the local database (db.json)
-├── docs/            # Documentation (Tasks, Specs, Guides)
-├── exports/         # Generated CSV/Markdown reports
-├── logs/            # Application system logs
-├── src/             # Source code
-├── tests/           # Unit tests
-└── README.md        # This file
+├── data/
+│   └── db.json                # JSON Database for analysis history
+├── docs/
+│   ├── GOOGLE_SETUP.md        # Guide for setting up Google Sheets
+│   └── specifications.md      # Project specifications
+├── exports/                   # Directory for exported files (CSV, MD)
+├── logs/
+│   └── app.log                # Application logs
+├── scripts/
+│   ├── list_models.py         # Script to list available Gemini models
+│   └── verify_gemini.py       # Script to verify Gemini API connection
+├── src/
+│   ├── ai_client.py           # Gemini AI integration logic
+│   ├── analyzer.py            # Local text analysis logic (statistics)
+│   ├── exporter.py            # Logic for exporting data (CSV, MD, Sheets)
+│   ├── main.py                # Main entry point and CLI interface
+│   ├── pdf_utils.py           # Utilities for handling PDF files
+│   └── storage.py             # JSON storage management
+├── tests/
+│   ├── test_analyzer.py       # Tests for local analysis
+│   └── test_storage.py        # Tests for storage operations
+├── .env                       # Environment variables (API Keys)
+├── .gitignore                 # Git ignore rules
+├── credentials.json           # Google Service Account Key (ignored)
+├── LICENSE                    # License file
+├── README.md                  # Project documentation (English)
+├── README.it.md               # Project documentation (Italian)
+└── requirements.txt           # Python dependencies
 ```
 
 ## 🚀 Quick Start

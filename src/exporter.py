@@ -130,7 +130,7 @@ def export_to_google_sheet(data: List[Dict], sheet_name: str, credentials_path: 
         worksheet.clear()
         worksheet.append_row(headers)
         worksheet.append_rows(rows)
-        
+
         logger.info(f"Exported to Google Sheet: {sheet_name}")
         return f"https://docs.google.com/spreadsheets/d/{sh.id}"
         

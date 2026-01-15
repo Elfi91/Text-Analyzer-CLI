@@ -24,13 +24,34 @@
 
 ```bash
 Text-Analyzer-CLI/
-├── data/            # Contiene il database locale (db.json)
-├── docs/            # Documentazione (Task, Specifiche, Guide)
-├── exports/         # Report generati (CSV/Markdown)
-├── logs/            # Log di sistema dell'applicazione
-├── src/             # Codice sorgente
-├── tests/           # Unit test
-└── README.it.md     # Questo file
+├── data/
+│   └── db.json                # Database JSON per lo storico analisi
+├── docs/
+│   ├── GOOGLE_SETUP.md        # Guida per il setup di Google Sheets
+│   └── specifications.md      # Specifiche del progetto
+├── exports/                   # Cartella per i file esportati (CSV, MD)
+├── logs/
+│   └── app.log                # Log dell'applicazione
+├── scripts/
+│   ├── list_models.py         # Script per elencare i modelli Gemini disponibili
+│   └── verify_gemini.py       # Script per verificare la connessione alle API Gemini
+├── src/
+│   ├── ai_client.py           # Logica di integrazione con Gemini AI
+│   ├── analyzer.py            # Logica di analisi locale del testo (statistiche)
+│   ├── exporter.py            # Logica per l'esportazione dei dati (CSV, MD, Sheets)
+│   ├── main.py                # Punto di ingresso principale e interfaccia CLI
+│   ├── pdf_utils.py           # Utilità per la gestione dei file PDF
+│   └── storage.py             # Gestione dell'archiviazione JSON
+├── tests/
+│   ├── test_analyzer.py       # Test per l'analisi locale
+│   └── test_storage.py        # Test per le operazioni di storage
+├── .env                       # Variabili d'ambiente (API Keys)
+├── .gitignore                 # Regole per git ignore
+├── credentials.json           # Chiave Google Service Account (ignorato da git)
+├── LICENSE                    # File di licenza
+├── README.md                  # Documentazione del progetto (Inglese)
+├── README.it.md               # Documentazione del progetto (Italiano)
+└── requirements.txt           # Dipendenze Python
 ```
 
 ## 🚀 Guida Rapida
