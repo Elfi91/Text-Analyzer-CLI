@@ -37,12 +37,12 @@ Text-Analyzer-CLI/
 │   ├── list_models.py         # Script to list available Gemini models
 │   └── verify_gemini.py       # Script to verify Gemini API connection
 ├── src/
-│   ├── ai_client.py           # Gemini AI integration logic
-│   ├── analyzer.py            # Local text analysis logic (statistics)
-│   ├── exporter.py            # Logic for exporting data (CSV, MD, Sheets)
-│   ├── main.py                # Main entry point and CLI interface
-│   ├── pdf_utils.py           # Utilities for handling PDF files
-│   └── storage.py             # JSON storage management
+│   ├── ai_client.py           # GeminiClient class (AI Integration)
+│   ├── analyzer.py            # TextAnalyzer class (Analysis logic)
+│   ├── exporter.py            # ReportExporter class (Data export)
+│   ├── main.py                # TextAnalyzerApp class (Main Application)
+│   ├── pdf_utils.py           # PDFProcessor class (PDF handling)
+│   └── storage.py             # StorageManager class (Database)
 ├── tests/
 │   ├── test_analyzer.py       # Tests for local analysis
 │   └── test_storage.py        # Tests for storage operations

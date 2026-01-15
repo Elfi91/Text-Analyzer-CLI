@@ -32,13 +32,17 @@
 *   **Usabilità:** I messaggi di errore devono essere "human-readable" e guidare l'utente alla soluzione.
 
 ## 4. Architettura Tecnica
-Il sistema seguirà il principio della **Separazione delle Responsabilità (SoC)**, diviso in moduli distinti:
+Il sistema segue un approccio **Object-Oriented (OOP)** per garantire modularità ed estensibilità.
 
-### Moduli
-1.  **CLI Interface (`cli.py`):** Gestisce l'input utente (argparse), la validazione preliminare e l'output formattato (Rich/print).
-2.  **Local Analyzer (`analyzer.py`):** Logica pura per il calcolo delle statistiche locali (word count).
-3.  **AI Provider (`ai_client.py`):** Wrapper attorno all'SDK di Gemini. Gestisce l'autenticazione, la costruzione del prompt (Prompt Engineering per output strutturato) e la gestione degli errori API.
-4.  **Storage Engine (`storage.py`):** Astrazione sopra TinyDB/JSON. Gestisce salvataggio e recupero dati, inclusi ID univoci e Timestamp.
+### Classi Principali (Modules)
+1.  **`main.py` -> `TextAnalyzerApp`:** Classe orchestratore. Gestisce l'interfaccia CLI, il routing dei comandi e l'iniezione delle dipendenze.
+2.  **`analyzer.py` -> `TextAnalyzer`:** Classe responsabile della logica pura per il calcolo delle statistiche locali (conteggio parole, ecc.).
+3.  **`ai_client.py` -> `GeminiClient`:** Classe wrapper per l'SDK di Gemini. Gestisce l'autenticazione, la configurazione del modello e le chiamate API strutturate.
+4.  **`storage.py` -> `StorageManager`:** Classe per la gestione della persistenza dati su JSON.
+5.  **`exporter.py` -> `ReportExporter`:** Classe dedicata all'esportazione dei risultati in vari formati (CSV, Markdown, Google Sheets).
+6.  **`pdf_utils.py` -> `PDFProcessor`:** Classe utilitaria per l'estrazione e il preprocessing del testo da file PDF.
+
+### Flusso Dati
 
 ### Flusso Dati
 Input CLI -> Validazione -> Local Stats -> Chiamata AI (Async/Sync) -> Validazione Output AI -> Salvataggio DB -> Output a Video
