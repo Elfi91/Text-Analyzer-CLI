@@ -2,29 +2,24 @@
 import os
 import json
 import pytest
-from src import storage
-
-# Mocking DB_FILE for tests to avoid writing to the real db.json
-# We will use monkeypatch to point storage.DB_FILE to a temp file
+from src.storage import StorageManager
 
 @pytest.fixture
-def mock_db_file(tmp_path, monkeypatch):
-    """Fixture to mock the DB file path."""
+def mock_storage(tmp_path):
+    """Fixture to create a StorageManager with a temp directory."""
     d = tmp_path / "subdir"
-    d.mkdir()
-    p = d / "test_db.json"
-    monkeypatch.setattr(storage, "DB_FILE", str(p))
-    return p
+    # StorageManager creates dir if it doesn't exist
+    return StorageManager(data_dir=str(d), db_filename="test_db.json")
 
-def test_save_analysis(mock_db_file):
+def test_save_analysis(mock_storage):
     """Test saving a new analysis record."""
     data = {"text": "Test input", "word_count": 2}
-    record_id = storage.save_analysis(data)
+    record_id = mock_storage.save_analysis(data)
     
     assert record_id is not None
-    assert os.path.exists(mock_db_file)
+    assert os.path.exists(mock_storage.db_file)
     
-    with open(mock_db_file, "r") as f:
+    with open(mock_storage.db_file, "r") as f:
         content = json.load(f)
     
     assert len(content) == 1
@@ -33,24 +28,24 @@ def test_save_analysis(mock_db_file):
     assert saved_record["text"] == "Test input"
     assert "timestamp" in saved_record
 
-def test_get_history(mock_db_file):
+def test_get_history(mock_storage):
     """Test retrieving history."""
     # Save multiple records
-    storage.save_analysis({"text": "First"})
-    storage.save_analysis({"text": "Second"})
-    storage.save_analysis({"text": "Third"})
+    mock_storage.save_analysis({"text": "First"})
+    mock_storage.save_analysis({"text": "Second"})
+    mock_storage.save_analysis({"text": "Third"})
     
-    history = storage.get_history(limit=2)
+    history = mock_storage.get_history(limit=2)
     
     assert len(history) == 2
     assert history[0]["text"] == "Third"  # Most recent first
     assert history[1]["text"] == "Second"
 
-def test_load_empty_db_file_not_exists(mock_db_file):
+def test_load_empty_db_file_not_exists(tmp_path):
     """Test retrieving history when DB file doesn't exist."""
-    # Don't save anything, so file isn't created by save_analysis
-    # But mock_db_file path is set.
-    # Note: fixture creates directory but not file until we write
+    # Create manual instance in new dir
+    d = tmp_path / "empty_dir"
+    storage = StorageManager(data_dir=str(d))
     
     history = storage.get_history()
     assert history == []

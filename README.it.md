@@ -27,7 +27,8 @@ Text-Analyzer-CLI/
 ├── data/
 │   └── db.json                # Database JSON per lo storico analisi
 ├── docs/
-│   ├── GOOGLE_SETUP.md        # Guida per il setup di Google Sheets
+│   ├── GOOGLE_SETUP.md        # Guida per il setup di Google Sheets (EN)
+│   ├── GOOGLE_SETUP.it.md     # Guida per il setup di Google Sheets (IT)
 │   └── specifications.md      # Specifiche del progetto
 ├── exports/                   # Cartella per i file esportati (CSV, MD)
 ├── logs/
@@ -81,7 +82,7 @@ pip install -r requirements.txt
    ```env
    GEMINI_API_KEY=la_tua_chiave_api_qui
    ```
-3. *(Opzionale)* Per l'export su Google Sheets, posiziona il file `credentials.json` nella cartella principale (vedi [docs/GOOGLE_SETUP.md](docs/GOOGLE_SETUP.md)).
+3. *(Opzionale)* Per l'export su Google Sheets, posiziona il file `credentials.json` nella cartella principale (vedi [docs/GOOGLE_SETUP.it.md](docs/GOOGLE_SETUP.it.md)).
 
 ### 3. Utilizzo
 

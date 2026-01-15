@@ -27,7 +27,8 @@ Text-Analyzer-CLI/
 ├── data/
 │   └── db.json                # JSON Database for analysis history
 ├── docs/
-│   ├── GOOGLE_SETUP.md        # Guide for setting up Google Sheets
+│   ├── GOOGLE_SETUP.md        # Guide for setting up Google Sheets (EN)
+│   ├── GOOGLE_SETUP.it.md     # Guide for setting up Google Sheets (IT)
 │   └── specifications.md      # Project specifications
 ├── exports/                   # Directory for exported files (CSV, MD)
 ├── logs/
